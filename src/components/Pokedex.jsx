@@ -91,9 +91,9 @@ const Pokedex = ({ search }) => {
           <div key={index} className="border p-4 rounded shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-transform">
             <h2 className="text-lg font-bold capitalize mb-2">{poke.name}</h2>
             <img src={poke.sprites.front_default} alt={poke.name} className="w-full h-auto mb-2" />
-            <div className="flex space-x-2">
+            <div className="flex space-x-1">
               {poke.types.map(type => (
-                <div key={type.type.name} className={`p-1 rounded ${typeColors[type.type.name]}`}>
+                <div key={type.type.name} className={`p-2 rounded-full ${typeColors[type.type.name]}`}>
                   <img src={typeIcons[type.type.name]} alt={type.type.name} className="w-6 h-6" />
                 </div>
               ))}
