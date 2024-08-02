@@ -1,7 +1,7 @@
 # Pokemon App
 
 This website is give you Information about Pokemon and soon will be Game of Pokemon,
-Current l y, two official features are available:
+Currentl y, two official features are available:
 
 - Pokedex
 - Search Pokemon
