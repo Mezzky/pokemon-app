@@ -1,6 +1,6 @@
 # Pokemon App
 
-This website is give you Information about Pokemon and soon w i l l b e G ame of Pokemon,
+This website is give you Information about Pokemon and soon w i l l b e G a me of Pokemon,
 Currently, two official features are available:
 
 - Pokedex
