@@ -4,6 +4,6 @@ This website is give you Information about Pokemon and soon will be Game of Poke
 Currently, two official features are available:
 
 - Pokedex
-- S e a rch Pokemon
+- S e a r ch Pokemon
 - All Data Pokemon
 - Show More Feature
