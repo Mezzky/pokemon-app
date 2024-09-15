@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 
 const typeIcons = {
@@ -42,6 +43,7 @@ const typeColors = {
   water: 'bg-blue-500'
 };
 
+// eslint-disable-next-line react/prop-types
 const Pokedex = ({ search }) => {
   const [pokemon, setPokemon] = useState([]);
   const [displayCount, setDisplayCount] = useState(40);
@@ -88,7 +90,7 @@ const Pokedex = ({ search }) => {
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filteredPokemon.map((poke, index) => (
-          <div key={index} className="border p-4 rounded shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-transform">
+          <div key={index} className="border p-4 rounded shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-transform hover:cursor-pointer">
             <h2 className="text-lg font-bold capitalize mb-2">{poke.name}</h2>
             <img src={poke.sprites.front_default} alt={poke.name} className="w-full h-auto mb-2" />
             <div className="flex space-x-1">
@@ -102,7 +104,7 @@ const Pokedex = ({ search }) => {
         ))}
       </div>
       {displayCount < pokemon.length && (
-        <div className="mt-4 flex justify-center">
+        <div className="mt-10 flex justify-center">
           <button onClick={handleShowMore} className="w-3/5 py-4 bg-blue-500 text-white rounded shadow hover:bg-blue-600 transition text-xl font-semibold">
             Show More
           </button>
