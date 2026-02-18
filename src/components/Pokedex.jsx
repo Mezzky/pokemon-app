@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const typeIcons = {
   bug: '/icons/bug.svg',
@@ -45,30 +46,38 @@ const typeColors = {
 
 // eslint-disable-next-line react/prop-types
 const Pokedex = ({ search }) => {
+  const navigate = useNavigate();
   const [pokemon, setPokemon] = useState([]);
   const [displayCount, setDisplayCount] = useState(40);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAllPokemon = async () => {
-      const allPokemon = [];
-      let nextUrl = 'https://pokeapi.co/api/v2/pokemon?limit=100';
+      try {
+        const allPokemon = [];
+        let nextUrl = 'https://pokeapi.co/api/v2/pokemon?limit=100';
 
-      while (nextUrl) {
-        const response = await fetch(nextUrl);
-        const data = await response.json();
-        allPokemon.push(...data.results);
-        nextUrl = data.next;
+        while (nextUrl) {
+          const response = await fetch(nextUrl);
+          if (!response.ok) throw new Error(`Failed to fetch pokemon list: ${response.status}`);
+          const data = await response.json();
+          allPokemon.push(...data.results);
+          nextUrl = data.next;
+        }
+
+        const pokemonDetails = await Promise.all(
+          allPokemon.map(async (poke) => {
+            const res = await fetch(poke.url);
+            if (!res.ok) throw new Error(`Failed to fetch ${poke.name}: ${res.status}`);
+            return res.json();
+          })
+        );
+        setPokemon(pokemonDetails);
+        setLoading(false); // Set loading to false when all data is fetched
+      } catch (error) {
+        console.error('Error fetching pokemon data:', error);
+        setLoading(false);
       }
-
-      const pokemonDetails = await Promise.all(
-        allPokemon.map(async (poke) => {
-          const res = await fetch(poke.url);
-          return res.json();
-        })
-      );
-      setPokemon(pokemonDetails);
-      setLoading(false); // Set loading to false when all data is fetched
     };
 
     fetchAllPokemon();
@@ -90,7 +99,7 @@ const Pokedex = ({ search }) => {
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filteredPokemon.map((poke, index) => (
-          <div key={index} className="border p-4 rounded shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-transform hover:cursor-pointer">
+          <div key={index} className="border p-4 rounded shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-transform hover:cursor-pointer" onClick={() => navigate(`/pokemon/${poke.id}`)}>
             <h2 className="text-lg font-bold capitalize mb-2">{poke.name}</h2>
             <img src={poke.sprites.front_default} alt={poke.name} className="w-full h-auto mb-2" />
             <div className="flex space-x-1">
